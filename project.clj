@@ -1,4 +1,4 @@
-(defproject oss-clj "0.1.0"
+(defproject oss-clj "0.1.1"
   :description "Clojure Wrapper around oss-java client"
   :url "https://github.com/clinico-omics/oss-clj"
   :license {:name "Eclipse Public License"

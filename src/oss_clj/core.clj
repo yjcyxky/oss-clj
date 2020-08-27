@@ -2,9 +2,10 @@
   ^{:author "Jingcheng Yang<yjcyxky@163.com>"
     :description "Clojure Wrapper around oss-java client"}
   (:require [java-time :as t]
-            [clojure.data.json :as json])
+            [clojure.data.json :as json]
+            [clojure.java.io :as io])
   (:import [com.aliyun.oss OSSClientBuilder OSSClient OSSException ClientException HttpMethod ClientBuilderConfiguration]
-           [com.aliyun.oss.model ListObjectsRequest GeneratePresignedUrlRequest]
+           [com.aliyun.oss.model ListObjectsRequest GeneratePresignedUrlRequest GetObjectRequest]
            [java.io InputStreamReader BufferedReader FileInputStream]
            [java.util Date]))
 
@@ -63,6 +64,13 @@
    (->> (.getObjectContent (.getObject conn bucket name))
         (new InputStreamReader)
         (new BufferedReader))))
+
+(defn download-object
+  "Download object to a local path.
+   See Docs: https://www.alibabacloud.com/help/zh/doc-detail/84824.htm
+  "
+  [conn bucket name localpath]
+  (.getObject conn (new GetObjectRequest bucket name) (io/file localpath)))
 
 (defn- objectStat->map
   "Helper function for datatype conversion"
